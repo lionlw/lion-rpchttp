@@ -1,9 +1,14 @@
 # RPCHTTP机制
+
 ## 特点
 注解式http服务请求机制，避免了冗长的http接口请求操作，提供了类似于rpc的体验。
+
 ## 集成方式
+
 ### 客户端项目（即调用方）
+
 #### 定义接口
+```
 @HttpConfig(url = "/i")
 public interface IUserInfo {
 	@HttpConfig(url = "/getUserInfo")
@@ -27,6 +32,8 @@ public interface IUserInfo {
 	@HttpConfig(url = "/v3_0/SKY2/tou0/api/item/{itemid}/")
 	Item getItem(DynamicParam dynamicParam, @PathVariable("itemid") int itemid) throws Exception;
 }
+```
+
 #### 初始化RPCHttp客户端
 建议放在加载配置中心代码处。
 
