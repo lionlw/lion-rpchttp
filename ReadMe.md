@@ -66,35 +66,41 @@ IResult<UserInfo> iResult1 = testI.getUserInfo(1);
 #### HttpConfig注解说明
 可用于interface与method上。除url外，其余配置项都是method注解优先级高于interface注解。
 配置项|说明|默认值
----- | ----- | ------
-url  |	地址  |	
-method |请求方式|Constant.REQUESTMETHOD_GET
+----|-----|------
+url|地址|	
+method|请求方式|Constant.REQUESTMETHOD_GET
 targetEncoding|目标编码|UTF-8
 connectTimeoutSecond|链接超时秒数|3
 readTimeoutSecond|读取超时秒数|10
 
 #### 方法参数类型说明
 出于通用考虑，返回值可任意类型。
-配置项	说明
-@RequestParam("name") String name	get/post参数，括号内的name为请求的key，后面的name为对应的value
-@PathVariable("userid") int userid	路径参数，括号内的userid为路径中的变量名，后面的userid为对应的value
-@RequestBody test1 test	以post json方式传递实体
-@RequestEntity InputAddUserInfo inputAddUserInfo	将实体中的属性作为key，进行get/post发送，只支持一层属性
-@RequestHeader("Accept-Encoding") String encoding	请求头部，括号内的为header的key，后面的encoding为对应的value
-DynamicParam dynamicParam	动态参数，用于满足url等需在调用时动态变更的场景
-2.3.17.2.1.7.	方法返回值说明
+配置项|说明
+----|-----
+@RequestParam("name") String name|get/post参数，括号内的name为请求的key，后面的name为对应的value
+@PathVariable("userid") int userid|路径参数，括号内的userid为路径中的变量名，后面的userid为对应的value
+@RequestBody test1 test|以post json方式传递实体
+@RequestEntity InputAddUserInfo inputAddUserInfo|将实体中的属性作为key，进行get/post发送，只支持一层属性
+@RequestHeader("Accept-Encoding") String encoding|请求头部，括号内的为header的key，后面的encoding为对应的value
+DynamicParam dynamicParam|动态参数，用于满足url等需在调用时动态变更的场景
+
+#### 方法返回值说明
 返回值分2种：
 原始类型，与接口输出类型相对应，如：
+```
 	@HttpConfig(url = "/i/getUserInfo")
 	IResult<UserInfo> getUserInfo(@RequestParam("userid") int userid) throws Exception;
+```
 封装类型，RPCHttpResult<原始类型>，其封装了网络调用的输入输出（NetResult），用于排错。如：
+```
 	@HttpConfig(url = "/i/getUserInfo")
 	RPCHttpResult<IResult<UserInfo>> getUserInfoNew(@RequestParam("userid") int userid) throws Exception;
-#### RPCHttpClientConfig说明
+```
 
-配置项	说明	默认值
-bindIpPort	绑定ip端口，为空则表示不使用（127.0.0.1:8080）	空
-isDebug	是否debug模式	false
-logLevel	日志输出级别	Constant.LOGLEVEL_ERROR
-异常
-isMock	是否mock server数据（用于当server无法连接时，模拟server数据返回）	false
+#### RPCHttpClientConfig说明
+配置项|说明|默认值
+----|-----|----
+bindIpPort|绑定ip端口，为空则表示不使用（127.0.0.1:8080）|空
+isDebug|是否debug模式|false
+logLevel|日志输出级别|Constant.LOGLEVEL_ERROR 异常
+isMock|是否mock server数据（用于当server无法连接时，模拟server数据返回）|false
