@@ -36,7 +36,7 @@ public interface IUserInfo {
 
 #### 初始化RPCHttp客户端
 建议放在加载配置中心代码处。
-
+```
 		RPCHttpClient rpcHttpClient = new RPCHttpClient(Tool.newArrayList(
 				new RPCHttpServiceInfo("http://cmcservice.test.tvxio.com/", ICMC.class),
 				new RPCHttpServiceInfo("http://127.0.0.1:8080/DemoInterface-boot", IDemoInterface-boot.class)));
@@ -46,24 +46,34 @@ public interface IUserInfo {
 
 		rpchttpTest.icmc = rpcHttpClient.getInstance(ICMC.class);
 		rpchttpTest.iDemoInterface-boot = rpcHttpClient.getInstance(IDemoInterface-boot.class);
+```
 
 注意：
 rpcHttpClient.setRPCHttpClientConfig(RPCHttpClientConfig rpcHttpClientConfig);
 可进行细致化配置。
+
 #### 获取实例
 单例调用，比如弄成静态变量
+```
 IUserInfo testI = rpcHttpClient.getInstance(IUserInfo.class);
+```
+
 #### 执行方法
+```
 IResult<UserInfo> iResult1 = testI.getUserInfo(1);
+```
+
 #### HttpConfig注解说明
 可用于interface与method上。除url外，其余配置项都是method注解优先级高于interface注解。
-配置项	说明	默认值
-url 	地址	
-method	请求方式	Constant.REQUESTMETHOD_GET
-targetEncoding	目标编码	UTF-8
-connectTimeoutSecond	链接超时秒数	3
-readTimeoutSecond	读取超时秒数	10
-2.3.17.2.1.6.	方法参数类型说明
+配置项|说明|默认值
+---- | ----- | ------
+url  |	地址  |	
+method |请求方式|Constant.REQUESTMETHOD_GET
+targetEncoding|目标编码|UTF-8
+connectTimeoutSecond|链接超时秒数|3
+readTimeoutSecond|读取超时秒数|10
+
+#### 方法参数类型说明
 出于通用考虑，返回值可任意类型。
 配置项	说明
 @RequestParam("name") String name	get/post参数，括号内的name为请求的key，后面的name为对应的value
